@@ -27,7 +27,9 @@ class FileController extends Controller
     {
         $file = $request->file('file')->store('uploads', 'public');
         $image = Image::make(public_path($file));
-        $image->save(public_path('img/bar.png'));
+        $image->resize(null, 50, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save(public_path('img/bar.png'));
         echo 'ok';
     }
 }
